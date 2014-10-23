@@ -1,4 +1,3 @@
 [submodule "vendor/hiof-frontend"]
 	path = vendor/hiof-frontend
 	url = git@github.com:hiof/frontend.git
-  branch = feature/view-for-article-api
