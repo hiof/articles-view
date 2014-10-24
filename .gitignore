@@ -10,6 +10,7 @@ vendor/handlebars/**/*
 vendor/jquery/**/*
 vendor/jquery.scrollTo/**/*
 vendor/pathjs/**/*
+vendor/bootstrap/**/*
 node_modules/**/*
 
 secret.json
