@@ -1,0 +1,15 @@
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+# Icon?
+Thumbs.db
+
+build/**/*
+vendor/handlebars/**/*
+vendor/jquery/**/*
+vendor/jquery.scrollTo/**/*
+vendor/pathjs/**/*
+node_modules/**/*
+
+secret.json

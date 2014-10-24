@@ -1,0 +1,16 @@
+{
+  "name": "hiof-articles-view",
+  "version": "1.0.0",
+  "homepage": "https://github.com/hiof/hiof-articles-view",
+  "authors": [
+    "Kenneth Dahlstrøm <kenneth.dahlstrom@hiof.no>"
+  ],
+  "description": "Hiof-article-view package",
+  "license": "GNU",
+  "dependencies": {
+    "bootstrap": "~3.1.1",
+    "jquery.scrollTo": "~1.4.11",
+    "handlebars": "git@github.com:components/handlebars.js.git",
+    "pathjs": "git@github.com:mtrpcic/pathjs.git"
+  }
+}

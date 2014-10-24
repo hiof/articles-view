@@ -1,0 +1,56 @@
+
+// Layout
+
+.universal() {
+  // Layout
+  .lo-full {
+    width: 100%;
+  } 
+  .lo-half {
+    width: 50%;
+  }
+  .lo-quarter{
+    width: 25%;
+  }
+}
+
+.small(){
+
+}
+.medium(){
+  
+}
+
+.large(){
+  
+}
+
+.retina(){
+  
+}
+
+// IMPORT
+
+@import "../../../vendor/hiof-frontend/app/assets/less/variables/_standard.less";
+@import "../../../vendor/bootstrap/less/variables.less";
+@import "../../../vendor/bootstrap/less/mixins.less";
+@import "../../../vendor/hiof-frontend/app/assets/less/components/_component_content_article.less";
+
+
+
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+// Output
+.universal();
+@media screen and (max-width: 640px) {
+  .small();
+}
+@media screen and (min-width: 641px) and (max-width: 899px) {
+  .medium();
+}
+@media screen and (min-width: 900px) {
+  .large();
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dppx) {
+  .retina();
+}
