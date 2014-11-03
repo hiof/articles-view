@@ -1,8 +1,8 @@
-# Hiof article view packager
+# Hiof article view package
 
 ## About
 
-Hiof article view package.
+A package with the required files for article views.
 
 
 ## Copyright
