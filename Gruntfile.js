@@ -55,8 +55,6 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-      before: ['build/assets', 'build/css', 'build/js', 'build/config'],
-      after: ['tmp/**/*'],
       dist: ['dist/**/*'],
       deploy: ['deploy/**/*'],
       build: ['build/**/*']
@@ -88,7 +86,8 @@ module.exports = function(grunt) {
           'vendor/handlebars/handlebars.js',
           'vendor/jquery.scrollTo/jquery.scrollTo.js',
           'build/templates.js',
-          'vendor/hiof-frontend/app/assets/js/components/_component_articles.js',
+          'vendor/hiof-frontend/app/assets/js/components/_component_layoutHelper.js',
+          'vendor/hiof-frontend/app/assets/js/components/_component_articles.js'
         ],
         dest: 'build/<%= pkg.name %>.min.js'
       }
@@ -218,7 +217,7 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('subtaskJs', ['jshint', 'concat:scripts', 'uglify']);
+  grunt.registerTask('subtaskJs', ['handlebars','jshint', 'concat:scripts', 'uglify']);
   grunt.registerTask('subtaskCss', ['less', 'autoprefixer', 'cssmin']);
 
   grunt.registerTask('build', ['clean:build', 'clean:dist', 'subtaskJs', 'subtaskCss', 'versioning:build']);
