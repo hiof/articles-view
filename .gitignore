@@ -11,6 +11,7 @@ vendor/jquery/**/*
 vendor/jquery.scrollTo/**/*
 vendor/pathjs/**/*
 vendor/bootstrap/**/*
+vendor/jQuery-ajaxTransport-XDomainRequest/**/*
 node_modules/**/*
 
 secret.json
