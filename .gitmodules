@@ -1,0 +1,3 @@
+[submodule "vendor/frontend"]
+	path = vendor/frontend
+	url = git@github.com:hiof/frontend.git
