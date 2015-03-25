@@ -1,6 +1,6 @@
 {
   "name": "hiof-articles-view",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/hiof/hiof-articles-view",
   "authors": [
     "Kenneth Dahlstrøm <kenneth.dahlstrom@hiof.no>"
@@ -10,7 +10,8 @@
   "dependencies": {
     "bootstrap": "~3.1.1",
     "jquery.scrollTo": "~1.4.11",
-    "handlebars": "git@github.com:components/handlebars.js.git",
-    "pathjs": "git@github.com:mtrpcic/pathjs.git"
+    "handlebars": "~2.0.0",
+    "pathjs": "https://github.com/mtrpcic/pathjs.git",
+    "jQuery-ajaxTransport-XDomainRequest": "https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git"
   }
 }
