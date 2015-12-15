@@ -1,0 +1,130 @@
+
+// Layout
+
+
+
+// IMPORT
+@import '../../../vendor/sass-mq/mq';
+@import '../../../vendor/frontend/app/assets/sass/variables/_standard.scss';
+@import '_articles-view.scss';
+
+//@import "../../../vendor/frontend/app/assets/less/variables/_standard.less";
+//@import "../../../vendor/bootstrap/less/variables.less";
+//@import "../../../vendor/bootstrap/less/mixins.less";
+//@import "../../../vendor/frontend/app/assets/less/components/_component_content_article.less";
+
+
+
+
+// Override for FF
+.box-news-library{
+  width: 100%;
+}
+
+
+// Override old styling
+.pages-student,
+.page-employee,
+.page-library{
+  .box-news .article{
+    width: auto;
+    float: none;
+    margin: 0;
+    padding-left: inherit;
+    min-width: inherit;
+    border-radius: 0;
+    //border: none;
+    padding: 0;
+    .lead-paragraph{
+      width: auto;
+      margin: inherit;
+    }
+  }
+  .box-news{
+    min-height: auto !important;
+    float: left;
+    margin: 0;
+    width: 100%;
+  }
+}
+.page-employee{
+  border: none;
+}
+
+// Remove text-decoration on the paragraph when the article is hovered
+.article{
+  // remove left padding on .article
+  padding-left: 0;
+  a{
+
+    text-decoration: none !important;
+  }
+  a:hover{
+    .lead-paragraph{
+    }
+  }
+}
+
+
+.box_aktuelt{
+  width: 100%;
+  margin-left: -20px;
+  //margin-right: -20px;
+  .lo-full{
+    margin-bottom: 0;
+  }
+  .boxUnderline_aktuelt{
+    padding-left: 20px;
+    width: 100%;
+  }
+  .article{
+    padding: 20px;
+    //padding-bottom: 20px;
+    h3{
+      padding: 0;
+    }
+  }
+  .lead-paragraph{
+    padding: 0;
+  }
+  .outlet{
+  }
+  .lo-full{
+    padding: 0 !important;
+    //padding-right: 20px;
+    border-bottom: 10px solid #fff;
+  }
+  img{
+    width: 100%;
+  }
+}
+
+
+
+@include mq($until: small) {}
+
+@include mq($from: small, $until: large) {}
+
+@include mq($from: large) {
+  .box-news{
+    .outlet{
+      width: 100%;
+      margin: 0;
+    }
+    .lo-half{
+      width: 50%;
+      &:nth-child(even){
+        padding-left: 1rem;
+      }
+      &:nth-child(odd){
+        padding-right: 1rem;
+      }
+    }
+    .article-entry{
+      border: 1px solid #eee;
+    }
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dppx) {}

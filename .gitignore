@@ -6,12 +6,9 @@ ehthumbs.db
 Thumbs.db
 
 build/**/*
-vendor/handlebars/**/*
-vendor/jquery/**/*
-vendor/jquery.scrollTo/**/*
-vendor/pathjs/**/*
-vendor/bootstrap/**/*
-vendor/jQuery-ajaxTransport-XDomainRequest/**/*
+tmp/**/*
+dist/**/*
+vendor/**/*
 node_modules/**/*
 
 secret.json

@@ -1,17 +1,31 @@
 {
-  "name": "hiof-articles-view",
-  "version": "1.0.6",
-  "homepage": "https://github.com/hiof/hiof-articles-view",
+  "name": "articles-view",
+  "homepage": "https://github.com/hiof/articles-view",
   "authors": [
     "Kenneth Dahlstrøm <kenneth.dahlstrom@hiof.no>"
   ],
-  "description": "Hiof-article-view package",
-  "license": "GNU",
+  "description": "article-view package",
+  "license": "GPL-3.0",
   "dependencies": {
-    "bootstrap": "~3.1.1",
+    "sass-mq": "~3.2.2",
+    "bootstrap-sass": "~3.3.6",
     "jquery.scrollTo": "~1.4.11",
     "handlebars": "~2.0.0",
     "pathjs": "https://github.com/mtrpcic/pathjs.git",
-    "jQuery-ajaxTransport-XDomainRequest": "https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git"
-  }
+    "jQuery-ajaxTransport-XDomainRequest": "https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git",
+    "frontend": "https://github.com/hiof/frontend.git",
+    "hiof-layout": "https://github.com/hiof/layout.git",
+    "hiof-typography": "https://github.com/hiof/typography.git"
+  },
+  "main": "",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ]
 }
