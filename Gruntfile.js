@@ -39,7 +39,7 @@ module.exports = function(grunt) {
         cwd: 'build',
         src: ['*.css', '!*.min.css'],
         dest: 'build/',
-        ext: '.min.css'
+        ext: '.v<%= pkg.version %>.min.css'
       }
     },
     copy: {
@@ -111,7 +111,7 @@ module.exports = function(grunt) {
           //'vendor/frontend/app/assets/js/components/_component_articles.js'
           'build/_<%= pkg.name %>.js'
         ],
-        dest: 'build/<%= pkg.name %>.min.js'
+        dest: 'build/<%= pkg.name %>.v<%= pkg.version %>.min.js'
       }
     },
     uglify: {
@@ -123,7 +123,7 @@ module.exports = function(grunt) {
       },
       main: {
         files: {
-          'build/<%= pkg.name %>.min.js': ['build/<%= pkg.name %>.min.js']
+          'build/<%= pkg.name %>.v<%= pkg.version %>.min.js': ['build/<%= pkg.name %>.v<%= pkg.version %>.min.js']
         }
       }
     },
@@ -136,8 +136,8 @@ module.exports = function(grunt) {
       build: {
         files: [{
           assets: [{
-            src: ['build/<%= pkg.name %>.min.js'],
-            dest: 'build/<%= pkg.name %>.min.js'
+            src: ['build/<%= pkg.name %>.v<%= pkg.version %>.min.js'],
+            dest: 'build/<%= pkg.name %>.v<%= pkg.version %>.min.js'
           }],
           key: 'assets',
           dest: '',
@@ -145,8 +145,8 @@ module.exports = function(grunt) {
           ext: '.min.js'
         }, {
           assets: [{
-            src: 'build/<%= pkg.name %>.min.css',
-            dest: 'build/<%= pkg.name %>.min.css'
+            src: 'build/<%= pkg.name %>.v<%= pkg.version %>.min.css',
+            dest: 'build/<%= pkg.name %>.v<%= pkg.version %>.min.css'
           }],
           key: 'assets',
           dest: '',
@@ -161,8 +161,8 @@ module.exports = function(grunt) {
         },
         files: [{
           assets: [{
-            src: ['build/<%= pkg.name %>.min.js'],
-            dest: 'build/<%= pkg.name %>.min.js'
+            src: ['build/<%= pkg.name %>.v<%= pkg.version %>.min.js'],
+            dest: 'build/<%= pkg.name %>.v<%= pkg.version %>.min.js'
           }],
           key: 'assets',
           dest: '',
@@ -172,8 +172,8 @@ module.exports = function(grunt) {
 
         {
           assets: [{
-            src: 'build/<%= pkg.name %>.min.css',
-            dest: 'build/<%= pkg.name %>.css'
+            src: 'build/<%= pkg.name %>.v<%= pkg.version %>.min.css',
+            dest: 'build/<%= pkg.name %>.v<%= pkg.version %>.min.css'
           }],
           key: 'assets',
           dest: '',
