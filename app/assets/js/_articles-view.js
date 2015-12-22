@@ -242,7 +242,7 @@
   // Path for specific article content
   Path.map("#/articles/:article_id").enter(Hiof.updateAnalytics).to(function() {
     let identifier = 'div[data-pageid="' + this.params.article_id + '"]';
-      //let thisDestinationView = $(identifier).attr('data-article-destination-view')
+    //let thisDestinationView = $(identifier).attr('data-article-destination-view')
 
 
 
@@ -327,9 +327,9 @@
 
 
     $(document).on('hidden.bs.modal', '#modal-article-display', function (e) {
-      console.log('article dismissed...');
-        //Path.root("#/articles");
-        window.location.hash = '#/articles';
+      //console.log('article dismissed...');
+      //Path.root("#/articles");
+      window.location.hash = '#/articles';
     });
 
 
