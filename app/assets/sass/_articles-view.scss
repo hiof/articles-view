@@ -100,3 +100,36 @@
   padding: .4rem .8rem;
 
 }
+.study-catalogue-articles{
+
+  .lo-half{
+    padding: 0;
+
+  }
+
+  &> div:nth-child(odd){
+    background: pink;
+    .lo-half{
+      padding-left: 0.5rem;
+    }
+  }
+
+  &> div:nth-child(even){
+    background: green;
+
+    .lo-half{
+      padding-right: 0.5rem;
+    }
+  }
+
+
+  & > h3{
+    margin-bottom: 2rem;
+    padding: 0;
+  }
+}
+#modal-article-display{
+  .lo-full{
+    float: none;
+  }
+}
