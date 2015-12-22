@@ -1,26 +1,33 @@
 {{#each posts}}
 <article data-article-id="{{articleId}}" class="article-single lo-full">
+  {{#if articleTitle}}
   <h1>{{ articleTitle }}</h1>
+  {{/if}}
   <p><small>Publisert den {{articlePublishedDate}} klokken {{articlePublishedTime}} av <a href="http://hiof.no/nor/om-hogskolen/sok-pa-sidene/profil/?&displayitem={{authorId}}&module=admin" title="Se {{authorName}} sin profil">{{authorName}}</a></small></p>
   <p class="intro">{{ articleIntro }}</p>
   <div class="picture-container ratio-16-9"><img src="http://hiof.no/neted/services/file/?hash={{articleImage}}" alt="{{articleImageAltText}}" class="picture" /></div>
   {{{ articleContent }}}
   <p><small>Sist oppdatert {{articleUpdated}} av <a href="http://hiof.no/nor/om-hogskolen/sok-pa-sidene/profil/?&displayitem={{authorId}}&module=admin" title="Se {{authorName}} sin profil">{{authorName}}</a></small></p>
-  <h2>Kategorier</h2>
-  {{#each category}}
-  <a href="#/articles/category/{{@key}}" class="article-category-link">{{this}}</a>
-  {{/each}}
-  <h2>Relaterte artikkler</h2>
-  {{#each relatedArticles}}
-  <div class="lo-half">
-    <article data-article-id="{{this.articleId}}" class="article article-entry {{#if articleExternal}}article-external{{/if}}">
-      <a href="#/articles/{{this.articleId}}" title="Link til {{ articleTitle }}">
-        <img src="http://hiof.no/neted/services/file/?hash={{this.articleImage}}" alt="{{this.articleImageAltText}}" class="picture" />
-        <h3>{{ this.articleTitle }}</h3>
-        <p class="lead-paragraph">{{ this.articleIntro }}</p>
-      </a>
-    </article>
-  </div>
-  {{/each}}
+
+  {{#if category}}
+    <h2>Kategorier</h2>
+    {{#each category}}
+    <a href="#/articles/category/{{@key}}" class="article-category-link">{{this}}</a>
+    {{/each}}
+  {{/if}}
+  {{#if relatedArticles}}
+    <h2>Relaterte artikkler</h2>
+    {{#each relatedArticles}}
+    <div class="lo-half">
+      <article data-article-id="{{this.articleId}}" class="article article-entry {{#if articleExternal}}article-external{{/if}}">
+        <a href="#/articles/{{this.articleId}}" title="Link til {{ articleTitle }}">
+          <img src="http://hiof.no/neted/services/file/?hash={{this.articleImage}}" alt="{{this.articleImageAltText}}" class="picture" />
+          <h3>{{ this.articleTitle }}</h3>
+          <p class="lead-paragraph">{{ this.articleIntro }}</p>
+        </a>
+      </article>
+    </div>
+    {{/each}}
+  {{/if}}
 </article>
 {{/each}}
