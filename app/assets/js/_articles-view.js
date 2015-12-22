@@ -56,16 +56,18 @@
     data.posts[0].category = undefined;
     data.posts[0].relatedArticles = undefined;
     data.posts[0].relatedArticlesCategoryId = undefined;
-    let defaults = {
-
-    };
-
-    let settings = Object.assign(
-      {},
-      defaults,
-      options
-    );
-
+    //let defaults = {
+    //
+    //};
+    //
+    //let settings = Object.assign(
+    //  {},
+    //  defaults,
+    //  options
+    //);
+    let settings = $.extend({
+        // These are the defaults.
+    }, options);
 
     let templateSource = Hiof.Templates['articles/post-single'];
     //console.log(data);
