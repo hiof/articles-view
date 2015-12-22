@@ -108,7 +108,7 @@ module.exports = function(grunt) {
           'vendor/jquery.scrollTo/jquery.scrollTo.js',
           'build/templates.js',
           'vendor/frontend/app/assets/js/components/_component_layoutHelper.js',
-          //'vendor/frontend/app/assets/js/components/_component_articles.js'
+          'node_modules/es6-shim/es6-shim.js',
           'build/_<%= pkg.name %>.js'
         ],
         dest: 'build/<%= pkg.name %>.v<%= pkg.version %>.min.js'
