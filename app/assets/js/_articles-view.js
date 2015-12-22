@@ -2,51 +2,91 @@
 
   let scrollDest = false;
   Hiof.articleDisplayView = function(data = {}, options = {}) {
-    //console.log(data);
-    //console.log(options);
-    Hiof.articles = data;
-    let templateSource;
 
-    if (options.template === 'single') {
-      templateSource = Hiof.Templates['articles/post-single'];
-    } else {
-      templateSource = Hiof.Templates['articles/posts'];
-    }
+    if (options.destinationView === 'modal') {
+      createArticleModalView(data, options);
+    }else{
 
-    let markup = templateSource(data);
+      let templateSource;
 
-    if (!!options.destination) {
-      if (options.addType === 'append') {
-        $(options.destination).append(markup);
+      if (options.template === 'single') {
+        templateSource = Hiof.Templates['articles/post-single'];
       } else {
-        $(options.destination).html(markup);
+        templateSource = Hiof.Templates['articles/posts'];
       }
-      Hiof.articleScrollTo(options.destination);
-    } else {
-      $('#content').html(markup);
-      let scrollDestEl = "#content";
-      Hiof.articleScrollTo(scrollDestEl);
-    }
-    if (options.template === 'single') {
-      let thisArticleImage = "http://hiof.no/neted/services/file/?hash=" + data.posts[0].articleImage;
-      let meta = {
-        "og:url": window.location.href,
-        "og:title": data.posts[0].articleTitle,
-        "og:description": data.posts[0].articleIntro,
-        "og:type": "article",
-        "og:image": thisArticleImage,
-        "article:author": data.posts[0].authorName,
-        "article:publisher": Hiof.options.meta.fbpublisher
-      };
 
+      let markup = templateSource(data);
 
+      if (!!options.destination) {
+        if (options.addType === 'append') {
+          $(options.destination).append(markup);
+        } else {
+          $(options.destination).html(markup);
+        }
+        Hiof.articleScrollTo(options.destination);
+        if ($('.study-catalogue-articles').length) {
+          Hiof.EqualHeight($('.article'));
+        }
 
-      Hiof.syncMetaInformation(meta);
-    } else {
-      Hiof.syncMetaInformation();
+      } else {
+        $('#content').html(markup);
+        let scrollDestEl = "#content";
+        Hiof.articleScrollTo(scrollDestEl);
+      }
+      if (options.template === 'single') {
+        let thisArticleImage = "http://hiof.no/neted/services/file/?hash=" + data.posts[0].articleImage;
+        let meta = {
+          "og:url": window.location.href,
+          "og:title": data.posts[0].articleTitle,
+          "og:description": data.posts[0].articleIntro,
+          "og:type": "article",
+          "og:image": thisArticleImage,
+          "article:author": data.posts[0].authorName,
+          "article:publisher": Hiof.options.meta.fbpublisher
+        };
+        Hiof.syncMetaInformation(meta);
+      } else {
+        Hiof.syncMetaInformation();
+      }
     }
   };
+  createArticleModalView = function(data, options){
+    data.articleTitle = data.posts[0].articleTitle;
+    data.posts[0].articleTitle = undefined;
+    data.posts[0].category = undefined;
+    data.posts[0].relatedArticles = undefined;
+    data.posts[0].relatedArticlesCategoryId = undefined;
+    let defaults = {
 
+    };
+
+    let settings = Object.assign(
+      {},
+      defaults,
+      options
+    );
+
+
+    let templateSource = Hiof.Templates['articles/post-single'];
+    //console.log(data);
+    let markup = templateSource(data);
+
+
+    let thisData = {
+      modalId: 'article-display',
+      title: data.articleTitle,
+      body: markup,
+      footer: '<button type="button" class="btn btn-default" data-dismiss="modal">Steng vindu</button>'
+    }
+    let modalSource = Hiof.Templates['modal/generic'],
+    modalMarkup = modalSource(thisData);
+    if ($('#modal-article-display').length) {
+      $('#modal-article-display').remove();
+    }
+    $('body').append(modalMarkup);
+    $('#modal-article-display').modal('show');
+
+  };
 
   Hiof.articleScrollTo = function(destination) {
     if (scrollDest) {
@@ -78,6 +118,7 @@
     thisArticleLoClass = 'lo-half',
     thisAddType = '',
     thisDestinationAddress = null;
+    thisDestinationView = 'standard';
     if (thisLoader.attr('data-pageId')) {
       thisPageId = thisLoader.attr('data-pageId');
     }
@@ -120,12 +161,12 @@
       destination: thisDestination,
       articleLoClass: thisArticleLoClass,
       addType: thisAddType,
-      destinationAddress: thisDestinationAddress
+      destinationAddress: thisDestinationAddress,
+      destinationView: thisDestinationView
     };
     return options;
   };
   Hiof.articleLoadData = function(options, element) {
-    //debug('Hiof.articleLoadData initiated');
     // If options are not defined
     if (typeof options === 'undefined' || options === null) {
       // Get options from the initializer element
@@ -165,10 +206,14 @@
       data: settings,
       contentType: contentType,
       success: function(data) {
+
+        Hiof.articleDisplayView(data, settings);
+
+
         //console.log("Data:");
         //console.log(data);
         //alert("Data from Server: "+JSON.stringify(data));
-        Hiof.articleDisplayView(data, settings);
+
       },
       error: function(jqXHR, textStatus, errorThrown) {
         //alert("You can not send Cross Domain AJAX requests: " + errorThrown);
@@ -196,6 +241,11 @@
 
   // Path for specific article content
   Path.map("#/articles/:article_id").enter(Hiof.updateAnalytics).to(function() {
+    let identifier = 'div[data-pageid="' + this.params.article_id + '"]';
+      //let thisDestinationView = $(identifier).attr('data-article-destination-view')
+
+
+
     scrollDest = true;
     let thisDestination = '';
     if ($('.article-load').attr('data-destination')) {
@@ -206,7 +256,15 @@
       template: 'single',
       destination: thisDestination
     };
+    if ($(identifier).attr('data-article-destination-view') === 'modal') {
+      options.destinationView = 'modal';
+    }
+
+    //console.log(options);
+
     Hiof.articleLoadData(options);
+
+
   });
 
   // Path for categorized content
@@ -247,28 +305,6 @@
 
 
 
-  createArticleModalView = function(){
-    let templateSource = Hiof.Templates['articles/post-single'];
-
-    let markup = templateSource(Hiof.articles);
-
-
-    let thisData = {
-      modalId: 'article-display',
-      title: Hiof.articles.posts[0].articleTitle,
-      body: markup,
-      footer: '<button type="button" class="btn btn-default" data-dismiss="modal">Steng vindu</button><button type="submit" id="share-email-send" class="btn btn-primary" data-dismiss="modal">Del side</button>'
-    }
-    let modalSource = Hiof.Templates['modal/generic'],
-    modalMarkup = modalSource(thisData);
-
-    $('body').append(modalMarkup);
-    $('#modal-article-display').modal('show');
-
-  };
-
-
-
   // on document load
   $(function() {
 
@@ -283,15 +319,18 @@
       Hiof.articleLoadData();
 
     });
-    $('#content').on('click', '.my-articles a', function(e) {
-      e.preventDefault();
-      createArticleModalView();
+    //$('#content').on('click', '.study-catalogue-articles a', function(e) {
+    //  //e.preventDefault();
+    //  //createArticleModalView(body);
+    //  //onsole.log('Article should open in a modal');
+    //});
 
 
-
-
+    $(document).on('hidden.bs.modal', '#modal-article-display', function (e) {
+      console.log('article dismissed...');
+        //Path.root("#/articles");
+        window.location.hash = '#/articles';
     });
-
 
 
 
