@@ -224,6 +224,10 @@
     });
   };
 
+  Handlebars.registerHelper('urlize', function(value) {
+    return encodeURIComponent(value.replace(/\s+/g, '-').toLowerCase());
+    //return value;
+  });
   //Hiof.updateAnalytics = function() {
   //  //ga('set', 'page', document.location.href);
   //  //ga('send', 'pageview');
@@ -232,17 +236,29 @@
 
   // Standard path
 
-  Path.map("#/articles").to(function() {
+  Path.map("#/artikkel").to(function() {
     //scrollDest = false;
     $('.article-load').each(function() {
       //debug(this);
       Hiof.articleLoadData(null, this);
     });
   });
-
+  // Path for categorized content
+  Path.map("#/artikkel/kategori/:category_id").enter(Hiof.updateAnalytics).to(function() {
+    scrollDest = true;
+    let thisDestination = '';
+    if ($('.article-load').attr('data-destination')) {
+      thisDestination = $('.article-load').attr('data-destination');
+    }
+    let options = {
+      category: this.params.category_id,
+      destination: thisDestination
+    };
+    Hiof.articleLoadData(options);
+  });
 
   // Path for specific article content
-  Path.map("#/articles/:article_id").enter(Hiof.updateAnalytics).to(function() {
+  Path.map("#/artikkel/:article_title/:article_id").enter(Hiof.updateAnalytics).to(function() {
     let identifier = 'div[data-pageid="' + this.params.article_id + '"]';
     //let thisDestinationView = $(identifier).attr('data-article-destination-view')
 
@@ -269,22 +285,10 @@
 
   });
 
-  // Path for categorized content
-  Path.map("#/articles/category/:category_id").enter(Hiof.updateAnalytics).to(function() {
-    scrollDest = true;
-    let thisDestination = '';
-    if ($('.article-load').attr('data-destination')) {
-      thisDestination = $('.article-load').attr('data-destination');
-    }
-    let options = {
-      category: this.params.category_id,
-      destination: thisDestination
-    };
-    Hiof.articleLoadData(options);
-  });
+
 
   // Path for paged content
-  Path.map("#/articles/page/:page_id").enter(Hiof.updateAnalytics).to(function() {
+  Path.map("#/artikkel/page/:page_id").enter(Hiof.updateAnalytics).to(function() {
     scrollDest = true;
     let thisDestination = '';
     if ($('.article-load').attr('data-destination')) {
@@ -302,7 +306,7 @@
 
   initatePathArticle = function() {
     // Load root path if no path is active
-    Path.root("#/articles");
+    Path.root("#/artikkel");
   };
 
 
@@ -331,7 +335,7 @@
     $(document).on('hidden.bs.modal', '#modal-article-display', function (e) {
       //console.log('article dismissed...');
       //Path.root("#/articles");
-      window.location.hash = '#/articles';
+      window.location.hash = '#/artikkel';
     });
 
 

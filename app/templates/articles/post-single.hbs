@@ -20,7 +20,7 @@
     {{#each relatedArticles}}
     <div class="lo-half">
       <article data-article-id="{{this.articleId}}" class="article article-entry {{#if articleExternal}}article-external{{/if}}">
-        <a href="#/articles/{{this.articleId}}" title="Link til {{ articleTitle }}">
+        <a href="#/artikkel/{{urlize this.articleTitle}}/{{this.articleId}}" title="Link til {{ this.articleTitle }}">
           <img src="http://hiof.no/neted/services/file/?hash={{this.articleImage}}" alt="{{this.articleImageAltText}}" class="picture" />
           <h3>{{ this.articleTitle }}</h3>
           <p class="lead-paragraph">{{ this.articleIntro }}</p>
