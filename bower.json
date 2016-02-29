@@ -13,7 +13,7 @@
     "handlebars": "~2.0.0",
     "pathjs": "https://github.com/mtrpcic/pathjs.git",
     "jQuery-ajaxTransport-XDomainRequest": "https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git",
-    "frontend": "https://github.com/hiof/frontend.git",
+    "frontend": "https://github.com/hiof/frontend.git#feature/create-view-class-functionality",
     "hiof-layout": "https://github.com/hiof/layout.git",
     "hiof-typography": "https://github.com/hiof/typography.git"
   },

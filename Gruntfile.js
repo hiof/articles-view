@@ -59,6 +59,9 @@ module.exports = function(grunt) {
       }
     },
     clean: {
+      options: {
+        force: true
+      },
       dist: ['dist/**/*'],
       deploy: ['deploy/**/*'],
       build: ['build/**/*']
@@ -90,11 +93,13 @@ module.exports = function(grunt) {
     },
     babel: {
       options: {
-        sourceMap: true
+        sourceMap: true,
+        comments: false
         //presets: ['es2015']
       },
       dist: {
         files: {
+          //'build/_view.js': 'vendor/frontend/app/assets/js/components/_view.js',
           'build/_<%= pkg.name %>.js': 'app/assets/js/_articles-view.js'
         }
       }
@@ -108,6 +113,7 @@ module.exports = function(grunt) {
           'vendor/jquery.scrollTo/jquery.scrollTo.js',
           'build/templates.js',
           'vendor/frontend/app/assets/js/components/_component_layoutHelper.js',
+          //'build/_view.js',
           'build/_<%= pkg.name %>.js'
         ],
         dest: 'build/<%= pkg.name %>.v<%= pkg.version %>.min.js'
