@@ -7,7 +7,7 @@ class ArticlesView {
     //this.elOptions = this.setupOptions();
     this.defaults = {
       // These are the defaults.
-      url: 'http://hiof.no/api/v1/articles/',
+      url: '//hiof.no/api/v1/articles/',
       pageId: null,
       page: 1,
       pageSize: 20,
@@ -28,15 +28,15 @@ class ArticlesView {
 
     //console.log(options);
     // Setup the query
-    console.log('Options from getData...');
-    console.log(options);
+    //console.log('Options from getData...');
+    //console.log(options);
     let settings = Object.assign(
       {},
       this.defaults,
       options
     );
-    console.log('Settings from GetData');
-    console.log(settings);
+    //console.log('Settings from GetData');
+    //console.log(settings);
 
     let contentType = "application/x-www-form-urlencoded; charset=utf-8";
     if (window.XDomainRequest) { //for IE8,IE9
@@ -57,10 +57,6 @@ class ArticlesView {
         //console.log(data);
         //data.settings = settings;
         return data;
-        //Hiof.articleDisplayView(data, settings);
-        //console.log("Data:");
-        //console.log(data);
-        //alert("Data from Server: "+JSON.stringify(data));
       },
       error: function(jqXHR, textStatus, errorThrown) {
         //console.log("You can not send Cross Domain AJAX requests: " + errorThrown);
@@ -76,16 +72,16 @@ class ArticlesView {
     //console.log(this.getData());
     this.getData(options).success(function(data){
       //console.log(data);
-      console.log('renderArticle options....');
-      console.log(options);
-      console.log('renderArticle data....');
-      console.log(data);
+      //console.log('renderArticle options....');
+      //console.log(options);
+      //console.log('renderArticle data....');
+      //console.log(data);
       if (options.destinationView === 'modal') {
         this.renderArticleModal(data, options);
       }else{
         let templateSource;
         if (options.template === 'single') {
-          console.log('Single post template used....');
+          //console.log('Single post template used....');
           $('#content > header').remove();
           templateSource = this.postSingleTemplate;
         } else {
@@ -108,7 +104,7 @@ class ArticlesView {
           //super.scrollTo(scrollDestEl);
         }
         if (options.template === 'single') {
-          let thisArticleImage = "http://hiof.no/neted/services/file/?hash=" + data.posts[0].articleImage;
+          let thisArticleImage = "//hiof.no/neted/services/file/?hash=" + data.posts[0].articleImage;
           let meta = {
             "og:url": window.location.href,
             "og:title": data.posts[0].articleTitle,
@@ -286,142 +282,3 @@ class ArticlesView {
   }
 
 }
-
-
-
-(function(Hiof, undefined) {
-  $(function(){
-    let article = new ArticlesView();
-
-
-    Handlebars.registerHelper('urlize', function(value) {
-      return encodeURIComponent(value.replace(/\s+/g, '-').toLowerCase());
-      //return value;
-    });
-    //Hiof.updateAnalytics = function() {
-    //  //ga('set', 'page', document.location.href);
-    //  //ga('send', 'pageview');
-    //};
-
-
-
-    // Path for categorized content
-    Path.map("#/artikkel/kategori/:category_id").enter(Hiof.updateAnalytics).to(function() {
-      scrollDest = true;
-      let thisDestination = '';
-      if ($('.article-load').attr('data-destination')) {
-        thisDestination = $('.article-load').attr('data-destination');
-      }
-      let options = {
-        category: this.params.category_id,
-        destination: thisDestination
-      };
-      //Hiof.articleLoadData(options);
-      article.renderArticle(options);
-    });
-    //
-    // Path for specific article content
-    Path.map("#/artikkel/:articletitle/:articleid").enter(Hiof.updateAnalytics).to(function() {
-      let identifier = 'div[data-pageid="' + this.params.articleid + '"]';
-      //let thisDestinationView = $(identifier).attr('data-article-destination-view')
-      Hiof.articleParams = this.params;
-      //console.log(this.params);
-
-      scrollDest = true;
-      let thisDestination = '';
-      if ($('.article-load').attr('data-destination')) {
-        thisDestination = $('.article-load').attr('data-destination');
-      }
-      let options = {
-        pageId: this.params.articleid,
-        template: 'single',
-        destination: thisDestination
-      };
-      if ($(identifier).attr('data-article-destination-view') === 'modal') {
-        options.destinationView = 'modal';
-      }
-      $('html').addClass('article-single-view');
-      $('#sidebar').addClass('navbar navbar-default');
-      $('#nav-page').addClass('navbar-collapse');
-      $('#nav-page > ul').removeClass('nav-pills nav-stacked').addClass('nav navbar-nav');
-      $('#nav-page ul ul').addClass('dropdown-menu').parent('li').addClass('dropdown');
-      //$('#nav-page li.dropdown a').addClass('dropdown-toggle').append('<span class="caret"></span>');
-      $('#nav-page li.dropdown > a').addClass('btn btn-default').wrap('<div class="btn-group navbar-btn"></div>');
-      //$('#nav-page li.dropdown > a');
-      $('#nav-page .btn-group').append('<a href="#" data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></a>');
-      $('#nav-page .dropdown-menu').detach().appendTo('#nav-page .btn-group');
-      //console.log('Options from /artikkel/tittel/id');
-      //console.log(options);
-
-      //Hiof.articleLoadData(options);
-      article.renderArticle(options);
-
-    });
-    //
-    //
-    //
-    //// Path for paged content
-    //Path.map("#/artikkel/page/:page_id").enter(Hiof.updateAnalytics).to(function() {
-    //  scrollDest = true;
-    //  let thisDestination = '';
-    //  if ($('.article-load').attr('data-destination')) {
-    //    thisDestination = $('.article-load').attr('data-destination');
-    //  }
-    //
-    //  let options = {
-    //    page: this.params.page_id,
-    //    destination: thisDestination
-    //  };
-    //
-    //  Hiof.articleLoadData(options);
-    //});
-    // Standard path
-
-    Path.map("#/artikkel").enter(Hiof.updateAnalytics).to(function() {
-      //scrollDest = false;
-      $('.article-load').each(function() {
-        //debug(this);
-        //console.log('renderArticle executed from /artikkel');
-        article.renderArticle();
-        //Hiof.articleLoadData(null, this);
-      });
-    });
-
-    initatePathArticle = function() {
-      // Load root path if no path is active
-      Path.root("#/artikkel");
-    };
-
-
-
-
-
-    if ($('.article-load').length) {
-      initatePathArticle();
-      Path.listen();
-
-    }
-
-    //$('#content').on('click', '.article-more', function(e) {
-    //  e.preventDefault();
-    //  Hiof.articleLoadData();
-
-    //});
-    ////$('#content').on('click', '.study-catalogue-articles a', function(e) {
-    ////  //e.preventDefault();
-    ////  //createArticleModalView(body);
-    ////  //onsole.log('Article should open in a modal');
-    ////});
-
-    //$(document).on('hidden.bs.modal', '#modal-article-display', function (e) {
-    //  //console.log('article dismissed...');
-    //  //Path.root("#/articles");
-    //  window.location.hash = '#/artikkel';
-    //});
-
-
-
-
-  });
-
-})(window.Hiof = window.Hiof || {});

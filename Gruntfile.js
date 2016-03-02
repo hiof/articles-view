@@ -99,8 +99,8 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          //'build/_view.js': 'vendor/frontend/app/assets/js/components/_view.js',
-          'build/_<%= pkg.name %>.js': 'app/assets/js/_articles-view.js'
+          'build/_<%= pkg.name %>-functions.js': 'app/assets/js/_articles-functions.js',
+          'build/_<%= pkg.name %>-interactivity.js': 'app/assets/js/_articles-interactivity.js'
         }
       }
     },
@@ -113,8 +113,8 @@ module.exports = function(grunt) {
           'vendor/jquery.scrollTo/jquery.scrollTo.js',
           'build/templates.js',
           'vendor/frontend/app/assets/js/components/_component_layoutHelper.js',
-          //'build/_view.js',
-          'build/_<%= pkg.name %>.js'
+          'build/_<%= pkg.name %>-functions.js',
+          'build/_<%= pkg.name %>-interactivity.js'
         ],
         dest: 'build/<%= pkg.name %>.v<%= pkg.version %>.min.js'
       }
