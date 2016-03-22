@@ -1,6 +1,59 @@
 
+@import '../../../vendor/sass-mq/mq';
+@import '../../../vendor/frontend/app/assets/sass/variables/_standard.scss';
 
 
+//temp hack...
+
+.article-single-view{
+  #sidebar{
+    //display: none !important;
+  }
+  #main{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+  }
+  #sidebar, #content, #main > footer{
+    flex: 1 100%;
+  }
+  #sidebar{
+    order: 1;
+    width: auto;
+    background: #eee;
+    padding-top: 0;
+    margin-top: 2rem;
+    border-radius: .4rem;
+    .nav{
+      margin-bottom: 0;
+    }
+  }
+  #content{
+    order: 2;
+    //margin-left: 19%;
+    .outlet{
+      max-width: 64rem;
+      margin: 0 auto;
+    }
+  }
+  .btn-group{
+    margin-top: -4px;
+  }
+  .nav li{
+    display: inline-block;
+  }
+  #main > footer{
+    order: 3;
+  }
+  .picture-container{
+    margin-left: -19%;
+    width: 140%;
+    padding-bottom: 78% !important;
+  }
+  .nav{
+    text-align: center;
+  }
+}
 .article{
   border: 1px solid #eee;
   border-radius: .4rem;
@@ -22,9 +75,10 @@
   //}
 }
 .article-single{
-  .lo-full{
+  &.lo-full{
     padding: 0;
   }
+
 }
 .article-archive{
   border:none;
