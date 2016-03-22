@@ -12,16 +12,16 @@
   {{#if category}}
     <h2>Kategorier</h2>
     {{#each category}}
-    <a href="#/articles/category/{{@key}}" class="article-category-link">{{this}}</a>
+    <a href="#/{{urlize this}}/kategori/{{@key}}" class="article-category-link">{{this}}</a>
     {{/each}}
   {{/if}}
   {{#if relatedArticles}}
-    <h2>Relaterte artikkler</h2>
+    <h2>Relaterte artikler</h2>
     {{#each relatedArticles}}
     <div class="lo-half">
       <article data-article-id="{{this.articleId}}" class="article article-entry {{#if articleExternal}}article-external{{/if}}">
-        <a href="#/articles/{{this.articleId}}" title="Link til {{ articleTitle }}">
-          <img src="http://hiof.no/neted/services/file/?hash={{this.articleImage}}" alt="{{this.articleImageAltText}}" class="picture" />
+        <a href="#/{{urlize this.articleTitle}}/a/{{this.articleId}}" title="Link til {{ this.articleTitle }}">
+          <img src="//hiof.no/neted/services/file/?hash={{this.articleImage}}" alt="{{this.articleImageAltText}}" class="picture" />
           <h3>{{ this.articleTitle }}</h3>
           <p class="lead-paragraph">{{ this.articleIntro }}</p>
         </a>

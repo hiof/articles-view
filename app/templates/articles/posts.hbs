@@ -1,10 +1,10 @@
 {{#each posts}}
-<div class="{{ articleLoClass }}">
+<div class="{{articleLoClass}}">
   <article data-article-id="{{articleId}}" class="article article-entry {{#if articleExternal}}article-external{{/if}}">
-    <a href="{{#if articleExternal}}{{articleExternal}}{{else}}{{#if articleDestinationAddress}}{{articleDestinationAddress}}{{/if}}{{#if articleDestinationAddressInternal}}{{articleDestinationAddressInternal}}/{{articleId}}{{else}}#/articles/{{articleId}}{{/if}}{{/if}}" title="Link til {{ articleTitle }}">
+    <a href="{{#if articleExternal}}{{articleExternal}}{{else}}{{#if articleDestinationAddress}}{{articleDestinationAddress}}{{/if}}{{#if articleDestinationAddressInternal}}{{articleDestinationAddressInternal}}#/{{urlize articleTitle}}/a/{{articleId}}{{else}}#/{{urlize articleTitle}}/a/{{articleId}}{{/if}}{{/if}}" title="Les {{articleTitle}}">
       <div class="picture-container ratio-16-9"><img src="http://hiof.no/neted/services/file/?hash={{articleImage}}" alt="{{articleImageAltText}}" class="picture" /></div>
-      <h3>{{ articleTitle }}</h3>
-      <p class="lead-paragraph">{{{trimString70 articleIntro }}}</p>
+      <h3>{{articleTitle}}</h3>
+      <p class="lead-paragraph">{{articleIntro}}</p>
     </a>
   </article>
 </div>
