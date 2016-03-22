@@ -12,7 +12,12 @@ module.exports = function(grunt) {
       options: {
 
       },
-      dist: {
+      www: {
+        files: {
+          'build/<%= pkg.name %>.css': 'app/assets/sass/www-articles-view.scss'
+        }
+      },
+      www2: {
         files: {
           'build/<%= pkg.name %>.css': 'app/assets/sass/www2-articles-view.scss'
         }
@@ -87,7 +92,7 @@ module.exports = function(grunt) {
       },
       all: {
         files: {
-          "build/templates.js": ["app/templates/**/*.hbs"]
+          "build/templates.js": ["app/templates/**/*.hbs", "vendor/frontend/app/templates/**/*.hbs"]
         }
       }
     },
@@ -99,20 +104,32 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
+          'build/_view.js': 'vendor/frontend/app/assets/js/components/_view.js',
           'build/_<%= pkg.name %>-functions.js': 'app/assets/js/_articles-functions.js',
           'build/_<%= pkg.name %>-interactivity.js': 'app/assets/js/_articles-interactivity.js'
         }
       }
     },
     concat: {
-      scripts: {
+      scriptswww2: {
         src: [
           'vendor/jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min.js',
           'vendor/pathjs/path.js',
           'vendor/handlebars/handlebars.js',
           'vendor/jquery.scrollTo/jquery.scrollTo.js',
+          'vendor/detectjs/detect.min.js',
           'build/templates.js',
+          'vendor/frontend/app/assets/js/components/_helper.js',
           'vendor/frontend/app/assets/js/components/_component_layoutHelper.js',
+          'build/_view.js',
+          'build/_<%= pkg.name %>-functions.js',
+          'build/_<%= pkg.name %>-interactivity.js'
+        ],
+        dest: 'build/<%= pkg.name %>.v<%= pkg.version %>.min.js'
+      },
+      scriptswww: {
+        src: [
+          'build/templates.js',
           'build/_<%= pkg.name %>-functions.js',
           'build/_<%= pkg.name %>-interactivity.js'
         ],
@@ -278,17 +295,21 @@ module.exports = function(grunt) {
 
 });
 
-grunt.registerTask('subtaskJs', ['eslint', 'handlebars','babel', 'concat:scripts', 'uglify']);
-grunt.registerTask('subtaskCss', ['sass', 'autoprefixer', 'cssmin']);
+grunt.registerTask('subtaskJswww', ['eslint', 'handlebars','babel', 'concat:scriptswww', 'uglify']);
+grunt.registerTask('subtaskJswww2', ['eslint', 'handlebars','babel', 'concat:scriptswww2', 'uglify']);
+grunt.registerTask('subtaskCsswww', ['sass:www', 'autoprefixer', 'cssmin']);
+grunt.registerTask('subtaskCsswww2', ['sass:www2', 'autoprefixer', 'cssmin']);
 
-grunt.registerTask('build', ['clean:build', 'clean:dist', 'copy:images', 'subtaskJs', 'subtaskCss', 'versioning:build']);
-grunt.registerTask('deploy', ['clean:build', 'clean:dist', 'subtaskJs', 'subtaskCss', 'versioning:deploy', 'copy:dist']);
+grunt.registerTask('buildwww', ['clean:build', 'clean:dist', 'copy:images', 'subtaskJswww', 'subtaskCsswww', 'versioning:build']);
+grunt.registerTask('buildwww2', ['clean:build', 'clean:dist', 'copy:images', 'subtaskJswww2', 'subtaskCsswww2', 'versioning:build']);
+grunt.registerTask('deploywww', ['clean:build', 'clean:dist', 'copy:images', 'subtaskJswww', 'subtaskCsswww', 'versioning:deploy', 'copy:dist']);
+grunt.registerTask('deploywww2', ['clean:build', 'clean:dist', 'copy:images', 'subtaskJswww2', 'subtaskCsswww2', 'versioning:deploy', 'copy:dist']);
 
 
 
-grunt.registerTask('deploy-staging', ['deploy', 'sftp:stage']);
-grunt.registerTask('deploy-prod', ['deploy', 'sftp:prod']);
-grunt.registerTask('deploy-staging2', ['deploy', 'sftp:stage2']);
-grunt.registerTask('deploy-prod2', ['deploy', 'sftp:prod2']);
+grunt.registerTask('deploy-staging', ['deploywww', 'sftp:stage']);
+grunt.registerTask('deploy-prod', ['deploywww', 'sftp:prod']);
+grunt.registerTask('deploy-staging2', ['deploywww2', 'sftp:stage2']);
+grunt.registerTask('deploy-prod2', ['deploywww2', 'sftp:prod2']);
 
 };

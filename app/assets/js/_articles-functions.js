@@ -1,10 +1,10 @@
 
 class ArticlesView {
   constructor() {
+    this.view = new View();
     this.postsTemplate = Hiof.Templates['articles/posts'];
     this.postSingleTemplate = Hiof.Templates['articles/post-single'];
     this.scrollDest = false;
-    //this.elOptions = this.setupOptions();
     this.defaults = {
       // These are the defaults.
       url: '//hiof.no/api/v1/articles/',
@@ -22,70 +22,50 @@ class ArticlesView {
 
 
   }
-  getData(options = {}){
-    //console.log("getData executed");
-    // If options are not defined
+  //getData(options = {}){
+  //  // Setup the query
+  //  let settings = Object.assign(
+  //    {},
+  //    this.defaults,
+  //    options
+  //  );
+  //  let contentType = "application/x-www-form-urlencoded; charset=utf-8";
+  //  if (window.XDomainRequest) { //for IE8,IE9
+  //    contentType = "text/plain";
+  //  }
+  //  return $.ajax({
+  //    url: settings.url,
+  //    method: 'GET',
+  //    async: true,
+  //    dataType: 'json',
+  //    data: settings,
+  //    contentType: contentType,
+  //    context: this,
+  //    success: function(data) {
+  //      return data;
+  //    },
+  //    error: function(jqXHR, textStatus, errorThrown) {
+  //    }
+  //  });
+  //}
 
-    //console.log(options);
-    // Setup the query
-    //console.log('Options from getData...');
-    //console.log(options);
-    let settings = Object.assign(
-      {},
-      this.defaults,
-      options
-    );
-    //console.log('Settings from GetData');
-    //console.log(settings);
-
-    let contentType = "application/x-www-form-urlencoded; charset=utf-8";
-    if (window.XDomainRequest) { //for IE8,IE9
-      contentType = "text/plain";
-    }
-    //console.log('Settings from getData:');
-    //console.log(settings);
-    return $.ajax({
-      url: settings.url,
-      method: 'GET',
-      async: true,
-      dataType: 'json',
-      data: settings,
-      contentType: contentType,
-      context: this,
-      success: function(data) {
-        //console.log('Data from getData success....');
-        //console.log(data);
-        //data.settings = settings;
-        return data;
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        //console.log("You can not send Cross Domain AJAX requests: " + errorThrown);
-      }
-
-    });
-  }
-  // getData() comes from View
   renderArticle(options = {}){
-    //console.log("running renderArticle");
-    //options.server = 'www';
-    //options.url = 'http://staging.hiof.no/api/v1/articles';
-    //console.log(this.getData());
-    this.getData(options).success(function(data){
-      //console.log(data);
-      //console.log('renderArticle options....');
-      //console.log(options);
-      //console.log('renderArticle data....');
-      //console.log(data);
+    
+
+    //Connect this context to the View class as that
+    let that = this;
+    // getData() Ajax for content, function takes the object options with all the settings.
+    // See the class constructor for mor information regarding the options.
+    this.view.getData(options, that).success(function(data){
       if (options.destinationView === 'modal') {
         this.renderArticleModal(data, options);
       }else{
-        let templateSource;
+        //let templateSource;
         if (options.template === 'single') {
-          //console.log('Single post template used....');
           $('#content > header').remove();
-          templateSource = this.postSingleTemplate;
+          templateSource = that.postSingleTemplate;
         } else {
-          templateSource = this.postsTemplate;
+          templateSource = that.postsTemplate;
         }
         let markup = templateSource(data);
         if (!!options.destination) {
@@ -94,6 +74,7 @@ class ArticlesView {
           } else {
             $(options.destination).html(markup);
           }
+          //that.view.scrollTo(options.destination);
           //Hiof.articleScrollTo(options.destination);
           if ($('.study-catalogue-articles').length) {
             Hiof.EqualHeight($('.article'));
@@ -101,7 +82,7 @@ class ArticlesView {
         } else {
           $('#content').html(markup);
           let scrollDestEl = "#content";
-          //super.scrollTo(scrollDestEl);
+          that.view.scrollTo(scrollDestEl);
         }
         if (options.template === 'single') {
           let thisArticleImage = "//hiof.no/neted/services/file/?hash=" + data.posts[0].articleImage;
@@ -112,11 +93,11 @@ class ArticlesView {
             "og:type": "article",
             "og:image": thisArticleImage,
             "article:author": data.posts[0].authorName,
-            "article:publisher": Hiof.options.meta.fbpublisher
+            "article:publisher": "https://facebook.com/hiofnorge"
           };
-          this.syncHeadMeta(meta);
+          that.view.syncHeadMeta(meta);
         } else {
-          this.syncHeadMeta();
+          //this.syncHeadMeta();
         }
       }
     });
@@ -161,7 +142,8 @@ class ArticlesView {
 
   }
 
-  setupOptions(el = {}){
+  setupOptions(el){
+
     let thisLoader;
     if (typeof el === 'undefined') {
       thisLoader = $('.article-load');
@@ -224,61 +206,12 @@ class ArticlesView {
       articleLoClass: thisArticleLoClass,
       addType: thisAddType,
       destinationAddress: thisDestinationAddress,
-      destinationView: thisDestinationView
+      destinationView: thisDestinationView,
+      url: this.defaults.url
     };
+    //console.log(options);
     return options;
   }
 
-  syncHeadMeta(meta = {}){
-    // Setup the settings
-    var settings = $.extend({
-      // These are the defaults.
-      "site_name": Hiof.options.meta.site_name,
-      "og:url": Hiof.options.meta["og:url"],
-      "og:title": Hiof.options.meta["og:title"],
-      "og:description": Hiof.options.meta["og:description"],
-      "og:type": Hiof.options.meta["og:type"],
-      "og:image": Hiof.options.meta["og:image"],
-      "fb:app_id": Hiof.options.meta.fbid,
-      "article:author": Hiof.options.meta.author
-    }, options);
-
-    // Updated / create meta-tags
-    $.each(settings, function(key, value) {
-      if (key === "og:title") {
-        // If the string contains pipe, remove it and everything after the pipe
-        if (value.indexOf('|')) {
-          value = value.substring(0, value.indexOf('|'));
-        }
-
-        if ($('meta[property="' + key + '"]').length) {
-          $('head title').text(value + ' | ' + settings.site_name);
-          $('meta[property="' + key + '"]').attr('content', value);
-
-        } else {
-          createAndApplyMetaElement(key, value);
-        }
-      } else if (key === "article:author") {
-        if ($('meta[property="' + key + '"]').length) {
-          $('meta[property="' + key + '"]').attr('content', value);
-          $('meta[name="Author"]').attr('content', value);
-        } else {
-          createAndApplyMetaElement(key, value);
-        }
-
-      } else if (key === "og:description") {
-        if ($('meta[property="' + key + '"]').length) {
-          $('meta[property="' + key + '"]').attr('content', value);
-          $('meta[name="Description"]').attr('content', value);
-        } else {
-          createAndApplyMetaElement(key, value);
-        }
-      } else if ($('meta[property="' + key + '"]').length) {
-        $('meta[property="' + key + '"]').attr('content', value);
-      } else {
-        createAndApplyMetaElement(key, value);
-      }
-    });
-  }
 
 }

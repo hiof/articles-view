@@ -1,12 +1,14 @@
 
 // Layout
 
-
+#content{
+  @import '../../../vendor/hiof-layout/dist/layout';
+}
 
 // IMPORT
 @import '../../../vendor/sass-mq/mq';
 @import '../../../vendor/frontend/app/assets/sass/variables/_standard.scss';
-@import '_articles-view.scss';
+@import 'www-articles-view.scss';
 
 //@import "../../../vendor/frontend/app/assets/less/variables/_standard.less";
 //@import "../../../vendor/bootstrap/less/variables.less";
@@ -122,6 +124,14 @@
     }
     .article-entry{
       border: 1px solid #eee;
+    }
+  }
+  #content{
+    > h1{
+      display: none;
+    }
+    .lo-full{
+      padding: 0;
     }
   }
 }

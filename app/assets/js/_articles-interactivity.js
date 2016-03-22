@@ -1,7 +1,7 @@
 (function(Hiof, undefined) {
   $(function(){
     let article = new ArticlesView();
-
+    //console.log('stuff is running from the article module...');
 
     Handlebars.registerHelper('urlize', function(value) {
       return encodeURIComponent(value.replace(/\s+/g, '-').toLowerCase());
@@ -30,7 +30,7 @@
     });
     //
     // Path for specific article content
-    Path.map("#/:articletitle/a/:articleid").enter(Hiof.updateAnalytics).to(function() {
+    Path.map("#/:articletitle/a/:articleid").to(function() {
       //console.log('("#/:articletitle/a/:articleid entered...');
       let identifier = 'div[data-pageid="' + this.params.articleid + '"]';
       //let thisDestinationView = $(identifier).attr('data-article-destination-view')
@@ -45,8 +45,11 @@
       let options = {
         pageId: this.params.articleid,
         template: 'single',
-        destination: thisDestination
+        destination: thisDestination,
+        url: article.defaults.url
       };
+      //console.log('Article...');
+      //console.log(article);
       if ($(identifier).attr('data-article-destination-view') === 'modal') {
         options.destinationView = 'modal';
       }
@@ -90,23 +93,63 @@
     //});
     // Standard path
 
-    Path.map("#/aktuelt").enter(Hiof.updateAnalytics).to(function() {
+    Path.map("#/aktuelt").to(function() {
       //scrollDest = false;
       $('.article-load').each(function() {
         //debug(this);
-        //console.log('renderArticle executed from /artikkel');
+        //console.log('renderArticle executed from /aktuelt');
+        article.renderArticle(article.setupOptions());
+        //Hiof.articleLoadData(null, this);
+      });
+    });
+    Path.map("#/").to(function() {
+      //scrollDest = false;
+      $('.article-load').each(function() {
+        //debug(this);
+        //console.log('renderArticle executed from /');
         article.renderArticle();
         //Hiof.articleLoadData(null, this);
       });
     });
-    Path.map("#/").enter(Hiof.updateAnalytics).to(function() {
-      //scrollDest = false;
-      $('.article-load').each(function() {
-        //debug(this);
-        //console.log('renderArticle executed from /artikkel');
-        article.renderArticle();
-        //Hiof.articleLoadData(null, this);
+
+
+    // Old URLs
+    Path.map("#/articles/:postid").to(function() {
+      //console.log("Running #/articles");
+      //location.hash = '#/aktuelt';
+      //let paramId = this.params.postid;
+
+
+      let options = article.setupOptions();
+      options.pageId = this.params.postid;
+      let that = this;
+
+
+      this.view.getData(options, that).success(function(data){
+          console.log(data.posts[0].articleTitle);
+
+                let destAddress = '#/' + encodeURIComponent(data.posts[0].articleTitle.replace(/\s+/g, '-').toLowerCase()) + '/a/' + paramId;
+                if(history.pushState) {
+                  history.pushState(null, null, destAddress);
+                }
+                else {
+                  location.hash = destAddress;
+                }
+
+
       });
+
+    });
+
+
+    // Catch all, redirect to index
+    Path.map("#/:all").to(function() {
+      if(history.pushState) {
+        history.pushState(null, null, '#/aktuelt');
+      }
+      else {
+        location.hash = '#/aktuelt';
+      }
     });
 
     initatePathArticle = function() {
