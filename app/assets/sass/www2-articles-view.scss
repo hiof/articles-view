@@ -15,7 +15,9 @@
 //@import "../../../vendor/bootstrap/less/mixins.less";
 //@import "../../../vendor/frontend/app/assets/less/components/_component_content_article.less";
 
-
+body:before{
+  display: none;
+}
 
 
 // Override for FF
