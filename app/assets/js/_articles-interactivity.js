@@ -96,10 +96,7 @@
     Path.map("#/aktuelt").to(function() {
       //scrollDest = false;
       $('.article-load').each(function() {
-        //debug(this);
-        //console.log('renderArticle executed from /aktuelt');
-        article.renderArticle(article.setupOptions());
-        //Hiof.articleLoadData(null, this);
+        article.renderArticle(article.setupOptions($(this)));
       });
     });
     Path.map("#/").to(function() {
