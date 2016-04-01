@@ -50,7 +50,6 @@ class ArticlesView {
   //}
 
   renderArticle(options = {}){
-    
 
     //Connect this context to the View class as that
     let that = this;
