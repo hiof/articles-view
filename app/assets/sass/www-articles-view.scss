@@ -57,6 +57,7 @@
 .article{
   border: 1px solid #eee;
   border-radius: .4rem;
+  display: block;
   img{
     margin-top: 0;
     margin-bottom: 1rem !important;
@@ -70,6 +71,24 @@
     padding: 1rem;
 
   }
+  a{
+    color: $text-color;
+    h3{
+      color: $color-primary-action;
+    }
+    .lead-paragraph{
+      color: $text-color;
+    }
+    &:hover{
+      h3{
+        text-decoration: underline;
+      }
+    }
+  }
+  >a{
+    display: block;
+    border-bottom: 0px !important;
+  }
   //&:hover{
   //  border: 1px solid $color-primary-action;
   //}
@@ -78,7 +97,9 @@
   &.lo-full{
     padding: 0;
   }
-
+  h2,h3{
+    line-height: 3em;
+  }
 }
 .article-archive{
   border:none;
@@ -96,27 +117,15 @@
   }
 }
 
-
-.article{
-  a{
-    color: $text-color;
-    h3{
-      color: $color-primary-action;
-    }
-    .lead-paragraph{
-      color: $text-color;
-    }
-    &:hover{
-      h3{
-        text-decoration: underline;
-      }
-    }
-  }
-}
 .article-entry{
+  .picture-container,
   img{
     border-bottom-left-radius: 0rem;
     border-bottom-right-radius: 0rem;
+  }
+  .picture-container,
+  img{
+    margin-bottom: 0 !important;
   }
 }
 .article-external{
@@ -147,12 +156,11 @@
   }
 }
 .article-category-link{
-  margin: 2rem 0;
-  margin-right: 1rem;
-  border: 1px solid #eee;
+  margin: 0 1rem 1rem 0;
+  border: 1px solid #eee !important;
   border-radius: $border-radius-small;
   padding: .4rem .8rem;
-
+  display: inline-block;
 }
 .study-catalogue-articles{
 
@@ -182,8 +190,91 @@
     padding: 0;
   }
 }
+.article-related{
+  h2{
+    width: 100%;
+  }
+}
 #modal-article-display{
   .lo-full{
     float: none;
+  }
+}
+
+
+.flexbox{
+  #news,
+  #research,
+  #content .outlet,
+  .article-related{
+    display: flex;
+    flex-wrap: wrap;
+    .article{
+      display: flex;
+    }
+  }
+
+  #news,
+  #research{
+    .lo-quarter{
+      display: flex;
+      padding: .5rem;
+      margin-bottom: 1rem;
+      &.lo-first{
+        padding-left: 0;
+      }
+      &.lo-last{
+        padding-right: 0;
+      }
+    }
+  }
+  #content .outlet,
+  .article-related{
+    width: 100%;
+    .lo-half{
+      display: flex;
+      padding: 0;
+      margin-bottom: 1rem;
+      &:nth-child(odd){
+        padding-right: .5rem;
+      }
+      &:nth-child(even){
+        padding-left: .5rem;
+      }
+    }
+  }
+
+}
+// IE10/IE11 flexbox fixes
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .flexbox{
+    #news,
+    #research,
+    #content .outlet,
+    .article-related{
+      .article{
+        a{
+          width: 100%;
+        }
+        width: 100%;
+        height: 100%;
+      }
+    }
+    #news,
+    #research{
+      .article{
+        img{
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@include mq($until: small) {
+  .article-single{
+    >header{
+      margin-top: 2rem;
+    }
   }
 }
