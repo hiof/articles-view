@@ -161,27 +161,12 @@
     if ($('.article-load').length) {
       initatePathArticle();
       Path.listen();
-
     }
 
-    //$('#content').on('click', '.article-more', function(e) {
-    //  e.preventDefault();
-    //  Hiof.articleLoadData();
-
-    //});
-    ////$('#content').on('click', '.study-catalogue-articles a', function(e) {
-    ////  //e.preventDefault();
-    ////  //createArticleModalView(body);
-    ////  //onsole.log('Article should open in a modal');
-    ////});
-
-    //$(document).on('hidden.bs.modal', '#modal-article-display', function (e) {
-    //  //console.log('article dismissed...');
-    //  //Path.root("#/articles");
-    //  window.location.hash = '#/artikkel';
-    //});
-
-
+    // Equal .article height on browsers lower than IE10
+    if ($('.lt-ie10').length) {
+      Hiof.EqualHeight($(".article"));
+    }
 
 
   });
