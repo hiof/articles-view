@@ -56,6 +56,7 @@ class ArticlesView {
     // getData() Ajax for content, function takes the object options with all the settings.
     // See the class constructor for mor information regarding the options.
     this.view.getData(options, that).success(function(data){
+
       if (options.destinationView === 'modal') {
         this.renderArticleModal(data, options);
       }else{
@@ -97,6 +98,20 @@ class ArticlesView {
           that.view.syncHeadMeta(meta);
         } else {
           //this.syncHeadMeta();
+        }
+        if ($('#program-KS602').length) {
+          data.posts[0].onlyTitle = true;
+          if (!$('#sidebar .article-sidebar').length) {
+            $('#sidebar').append('<div class="lo-full article-sidebar"><ul></ul></div>');
+            $('#sidebar .article-sidebar').prepend('<h3>Aktuelt om studiet</h3>');
+          }
+
+          let sidebarTemplateSource = that.postsTemplate;
+
+          let markup = templateSource(data);
+
+          $('#sidebar .article-sidebar ul').append(markup);
+
         }
       }
     });
