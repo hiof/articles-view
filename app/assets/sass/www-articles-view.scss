@@ -195,6 +195,18 @@
     width: 100%;
   }
 }
+.article-sidebar{
+  padding: 0 4rem;
+  li{
+    list-style: none;
+    margin-left: 0;
+    a{
+      display: block;
+      padding: .5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+  }
+}
 #modal-article-display{
   .lo-full{
     float: none;

@@ -123,17 +123,13 @@
 
 
       this.view.getData(options, that).success(function(data){
-          console.log(data.posts[0].articleTitle);
-
-                let destAddress = '#/' + encodeURIComponent(data.posts[0].articleTitle.replace(/\s+/g, '-').toLowerCase()) + '/a/' + paramId;
-                if(history.pushState) {
-                  history.pushState(null, null, destAddress);
-                }
-                else {
-                  location.hash = destAddress;
-                }
-
-
+        let destAddress = '#/' + encodeURIComponent(data.posts[0].articleTitle.replace(/\s+/g, '-').toLowerCase()) + '/a/' + paramId;
+        if(history.pushState) {
+          history.pushState(null, null, destAddress);
+        }
+        else {
+          location.hash = destAddress;
+        }
       });
 
     });
@@ -167,6 +163,15 @@
     if ($('.lt-ie10').length) {
       Hiof.EqualHeight($(".article"));
     }
+
+    $(document).on('hide.bs.modal', '#modal-article-display', function () {
+      if(history.pushState) {
+        history.pushState(null, null, '#/aktuelt');
+      }
+      else {
+        location.hash = '#/aktuelt';
+      }
+    })
 
 
   });

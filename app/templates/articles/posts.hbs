@@ -1,4 +1,9 @@
 {{#each posts}}
+{{#if onlyTitle}}
+<li><a href="{{#if articleExternal}}{{articleExternal}}{{else}}{{#if articleDestinationAddress}}{{articleDestinationAddress}}{{/if}}{{#if articleDestinationAddressInternal}}{{articleDestinationAddressInternal}}#/{{urlize articleTitle}}/a/{{articleId}}{{else}}#/{{urlize articleTitle}}/a/{{articleId}}{{/if}}{{/if}}" title="Les {{articleTitle}}">
+{{articleTitle}}
+</a></li>
+{{else}}
 <div class="{{articleLoClass}}">
   <article data-article-id="{{articleId}}" class="article article-entry {{#if articleExternal}}article-external{{/if}}">
     <a href="{{#if articleExternal}}{{articleExternal}}{{else}}{{#if articleDestinationAddress}}{{articleDestinationAddress}}{{/if}}{{#if articleDestinationAddressInternal}}{{articleDestinationAddressInternal}}#/{{urlize articleTitle}}/a/{{articleId}}{{else}}#/{{urlize articleTitle}}/a/{{articleId}}{{/if}}{{/if}}" title="Les {{articleTitle}}">
@@ -8,4 +13,5 @@
     </a>
   </article>
 </div>
+{{/if}}
 {{/each}}
