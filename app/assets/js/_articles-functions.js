@@ -7,7 +7,7 @@ class ArticlesView {
     this.scrollDest = false;
     this.defaults = {
       // These are the defaults.
-      url: '//hiof.no/api/v1/articles/',
+      url: '//www.hiof.no/api/v1/articles/',
       pageId: null,
       page: 1,
       pageSize: 20,
@@ -85,7 +85,7 @@ class ArticlesView {
           that.view.scrollTo(scrollDestEl);
         }
         if (options.template === 'single') {
-          let thisArticleImage = "//hiof.no/neted/services/file/?hash=" + data.posts[0].articleImage;
+          let thisArticleImage = "//www.hiof.no/neted/services/file/?hash=" + data.posts[0].articleImage;
           let meta = {
             "og:url": window.location.href,
             "og:title": data.posts[0].articleTitle,
